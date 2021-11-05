@@ -56,6 +56,9 @@ const posts = [
     }
 ];
 
+
+
+
 const container = document.getElementById('container');
 run(posts, container);
 
@@ -69,11 +72,13 @@ function run(posts, container){
 
 }
 
+
+
 //prende un elemento dell'array ne genera un post e lo inserisce nel container
 function generatePost(post, container){
     
     let info = returnPostInfo(post);
-    info.date = dateItalian(info.date);
+    info.date = monthsPassed(info.date);
     info.image = checkImage(info);
     const newPost = document.createElement('div');
     newPost.className = 'post';
@@ -154,6 +159,18 @@ function dateItalian(date){
     newDate += "-" + date.substr(0,4);
     return newDate;
 }
+
+//prende una data in formato USA e restituisce una stringa con i mesi passati ad oggi
+function monthsPassed(date){
+    const today = new Date().getMonth() +1; //conta i mesi partendo da zero infatti l'esempio sarà stato fatto a ottobre
+    console.log(today);
+    const month = parseInt(date.substr(5,2));
+    console.log(month);
+    let passedMonths = today - month ;
+    console.log(passedMonths);
+    return passedMonths + " mesi fa";
+}
+
 
 //controlla che l'immagine non si null in tal caso la modifica e restituisce l'immagine
 function checkImage(info){
