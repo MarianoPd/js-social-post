@@ -60,11 +60,15 @@ const container = document.getElementById('container');
 run(posts, container);
 
 function run(posts, container){
+    let postArray = [];
     container.innerHTML = '';
     for(let index in posts){
-        generatePost(posts[index], container);
+        postArray[index] = generatePost(posts[index], container);
     }
+
 }
+
+
 
 function returnPostInfo(post){
     let author= post["author"];
@@ -115,12 +119,28 @@ function generatePost(post, container){
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${info.likes}</b> persone
+                Piace a <b id="like-counter-${info.id}" class="js-likes-counter">${info.likes}</b> persone
             </div>
         </div> 
     </div>
     `;
     newPost.innerHTML += insideContent;
-    
+    setLikeClick(newPost, info);
+
+
+    return newPost;
 } 
 
+function setLikeClick(postHTML, info){
+    const likeBtn = postHTML.querySelector('.like-button');
+    const likeCounter = document.getElementById(`like-counter-${info.id}`); 
+    let likeCountValue = parseInt(likeCounter.innerHTML);
+    
+    likeBtn.addEventListener('click', addLike);
+
+    function addLike(event){
+        likeBtn.classList.add('like-button--liked');
+        likeCounter.innerHTML = ++likeCountValue;
+        this.removeEventListener('click', addLike);
+    }
+}
