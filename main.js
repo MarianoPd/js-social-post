@@ -81,15 +81,23 @@ function returnPostInfo(post){
         name: author["name"],
         image: author["image"],
         likes: post["likes"],
-        created: post["created"],
+        date: post["created"],
     }
 
     return info;
 }
 
+function dateItalian(date){
+    let newDate = date.substr(8,2);
+    newDate += "-" + date.substr(5,2);
+    newDate += "-" + date.substr(0,4);
+    return newDate;
+}
+
 function generatePost(post, container){
     
     let info = returnPostInfo(post);
+    info.date = dateItalian(info.date);
     
     const newPost = document.createElement('div');
     newPost.className = 'post';
@@ -102,7 +110,7 @@ function generatePost(post, container){
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${info.name}</div>
-                <div class="post-meta__time">${info.created}</div>
+                <div class="post-meta__time">${info.date}</div>
             </div>                    
         </div>
     </div>
